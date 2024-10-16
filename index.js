@@ -4,6 +4,7 @@ import  {DB_URI} from './config/server-config.js';
 import Tweet from './models/tweet.js';
 import tweetRepository from './repository/tweet-repository.js';
 import hashtagRepository from './repository/hashtag-repository.js';
+import TweetService from './services/tweet-service.js';
 const app=express();
 
 
@@ -24,6 +25,11 @@ app.listen(3000,async()=>{
     //     text:"future",
     //     tweets:["670e505ed745658130ba9293"]
     // });
+
+    const tweetServe=new TweetService();
+    await tweetServe.createTweet({
+        content:"hi thifdfds is my first tweet #tweeter #terero #playefffrtt"
+    })
 
     
        
