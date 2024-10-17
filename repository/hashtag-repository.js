@@ -2,41 +2,40 @@ import Hashtag from "../models/hashtag.js";
 import CrudRepository from "./crud-repository.js";
 
 
-class HashtagRepository extends CrudRepository{
-    constructor(){
+class HashtagRepository extends CrudRepository {
+    constructor() {
         super(Hashtag);
     }
 
 
-    async getByName(data){
+    async getByName(text) {
+        
         try {
-            const response=await Hashtag.find(  {
-                text: { $in: data } 
-              },
-              {
-                text: 1,
-                _id: 0
-              })
-
+            // console.log(text)
+          
+        
+            const response = await Hashtag.find({
+                text: text
+            })
 
             return response;
         } catch (error) {
             console.log(error);
             throw error;
-            
+
         }
     }
 
 
 
-    async bulkInsert(data){
+    async bulkInsert(data) {
         try {
-            const response=await Hashtag.insertMany(data)
-            console.log(response)
+            const response = await Hashtag.insertMany(data)
+            // console.log(response)
             return response;
-          
+
         } catch (error) {
-            
+
         }
 
     }

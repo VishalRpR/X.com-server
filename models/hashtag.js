@@ -1,16 +1,18 @@
 import mongoose, { Schema } from "mongoose";
 
 const hashtagSchema = mongoose.Schema({
-    text:{
-        type:String
+    text: {
+        type: String,
+        required: true,
+        unique: true
     },
-    tweets:{
-        type:Schema.ObjectId
-    }
+    tweets: [{
+        type: mongoose.Schema.Types.ObjectId
+    }]
 });
 
 
-const Hashtag=mongoose.model('Hashtag',hashtagSchema);
+const Hashtag = mongoose.model('Hashtag', hashtagSchema);
 
 
 export default Hashtag;

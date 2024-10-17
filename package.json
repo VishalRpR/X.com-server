@@ -11,8 +11,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.20.3",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
+    "http-status-code": "^2.1.0",
+    "http-status-codes": "^2.3.0",
     "mongoose": "^8.7.1",
     "nodemon": "^3.1.7"
   }

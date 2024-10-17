@@ -1,14 +1,19 @@
-import express from 'express';
+import express, { urlencoded } from 'express';
 import mongoose from 'mongoose';
 import  {DB_URI} from './config/server-config.js';
 import Tweet from './models/tweet.js';
 import tweetRepository from './repository/tweet-repository.js';
 import hashtagRepository from './repository/hashtag-repository.js';
 import TweetService from './services/tweet-service.js';
+import router from './routes/index.js';
+import bodyParser from 'body-parser';
 const app=express();
 
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}))
 
+app.use('/api', router)
 app.listen(3000,async()=>{
     console.log('Listening on port 3000');
     await mongoose.connect(DB_URI);
@@ -26,10 +31,10 @@ app.listen(3000,async()=>{
     //     tweets:["670e505ed745658130ba9293"]
     // });
 
-    const tweetServe=new TweetService();
-    await tweetServe.createTweet({
-        content:"hi thifdfds is my first tweet #tweeter #terero #playefffrtt"
-    })
+    // const tweetServe=new TweetService();
+    // await tweetServe.createTweet({
+    //     content:"hi thifdfds is my first tweet #tweeter #terero #playefffrtt"
+    // })
 
     
        
