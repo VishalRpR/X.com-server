@@ -3,13 +3,13 @@ import CrudRepository from "./crud-repository.js";
 
 class UserRepository extends CrudRepository {
 
-    constructor(){
+    constructor() {
         super(User)
     }
 
-    async getByEmail(email){
+    async getByEmail(email) {
         try {
-            const response=await User.findOne({email:email});
+            const response = await User.findOne({ email: email });
             return response;
         } catch (error) {
             throw error

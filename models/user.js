@@ -1,14 +1,14 @@
 import mongoose from "mongoose"
 import bcrypt from "bcryptjs"
-const userSchema=mongoose.Schema({
-    email:{
-        type:String,
-        required:true,
-        max:[250,"max limit is 250"]
+const userSchema = mongoose.Schema({
+    email: {
+        type: String,
+        required: true,
+        max: [250, "max limit is 250"]
     },
-    password:{
-        type:String,
-        requiered:true
+    password: {
+        type: String,
+        requiered: true
     }
 })
 
@@ -19,6 +19,6 @@ userSchema.pre('save', function (next) {
     this.password = hashed;
     next();
 });
-const User=mongoose.model("User",userSchema);
- 
+const User = mongoose.model("User", userSchema);
+
 export default User;
