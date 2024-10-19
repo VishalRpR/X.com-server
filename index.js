@@ -7,6 +7,7 @@ import hashtagRepository from './repository/hashtag-repository.js';
 import TweetService from './services/tweet-service.js';
 import router from './routes/index.js';
 import bodyParser from 'body-parser';
+import LikeService from './services/like-service.js';
 const app=express();
 
 
@@ -19,8 +20,12 @@ app.listen(3000,async()=>{
     await mongoose.connect(DB_URI);
     
     console.log("Db connected")
+        
+
+    const likeService = new LikeService();
 
 
+    // await likeService.toggleLike("6713904ae793750edc20ccaa","6713a048f115a903d2848b48","Tweet")
 
        const tweetRppo= new tweetRepository();
     //    const response=await tweetRppo.getAll();

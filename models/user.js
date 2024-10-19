@@ -10,7 +10,7 @@ const userSchema = mongoose.Schema({
         type: String,
         requiered: true
     }
-})
+}, { timestamps: true })
 
 userSchema.pre('save', function (next) {
     // Modify the document or perform additional tasks

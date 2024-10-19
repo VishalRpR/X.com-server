@@ -10,7 +10,7 @@ const hashtagSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref:"Tweet"
     }]
-});
+},{ timestamps: true });
 
 
 const Hashtag = mongoose.model('Hashtag', hashtagSchema);
