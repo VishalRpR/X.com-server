@@ -1,5 +1,4 @@
-import lib from "http-status-code";
-import { LikeRepository, TweetRepository } from "../repository/index.js";
+import { CommentRepository, LikeRepository, TweetRepository } from "../repository/index.js";
 
 
 
@@ -7,6 +6,7 @@ class LikeService {
     constructor() {
         this.likeRepository = new LikeRepository();
         this.tweetRepository = new TweetRepository();
+        this.commentRepository=new CommentRepository();
     }
 
     async toggleLike(userId, modelId, modelType) {
@@ -15,9 +15,9 @@ class LikeService {
             if (modelType == "Tweet") {
                 var likable = await this.tweetRepository.find(modelId);
               
-                console.log("likabletweet",likable);
+               
             } else if (modelType == "Comment") {
-                //TODO
+               var likable=await this.commentRepository.find(modelId);
             } else {
                 throw new Error("bad modelType")
             }
@@ -27,8 +27,9 @@ class LikeService {
                 likable: modelId,
                 user: userId
             })
-               console.log("existslikeobj",exists)
-
+             
+                
+               let isAdded;
 
           
 
@@ -36,10 +37,9 @@ class LikeService {
                 console.log("exits")
                 likable.likes.pull(exists.id);
                 await likable.save();
-                console.log("saved")
-                // const remove=await this.likeRepository.;
                 await exists.deleteOne();
-                console.log("removed")
+                isAdded=false
+                console.log("like removed")
             }else {
                 console.log("NOT exits")
                 const like = await this.likeRepository.create({
@@ -49,16 +49,18 @@ class LikeService {
                 })
                 likable.likes.push(like);
                 await likable.save();
-                console.log(like);
-                console.log(likable);
+               
+                isAdded=true
+                console.log("like Added")
+               
 
 
-                // console.log(likable);
+                
             }
 
 
 
-
+                     return isAdded;
 
 
         } catch (error) {
