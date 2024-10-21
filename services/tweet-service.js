@@ -17,16 +17,9 @@ class TweetService {
             //    puting data into tweet model
 
             const tweet = await this.tweetRepositroy.create(data);
-
-
-
             const prevhastag = await this.hashtagRepository.getByName(tags);
             const textofPresent = prevhastag.map((tag) => (tag.text));
-
-
             let newtags = tags.filter((tag) => !textofPresent.includes(tag));
-
-
             newtags = newtags.map((tag) => (
                 {
                     text: tag,
@@ -39,8 +32,6 @@ class TweetService {
 
             // // inset the resultinto hashtag model
             const newhashtag = await this.hashtagRepository.bulkInsert(newtags)
-
-
             prevhastag.forEach((tag) => {
 
                 tag.tweets.push(tweet.id);
@@ -48,19 +39,22 @@ class TweetService {
 
 
             });
-
-
-
-
             return {
                 tweet,
                 newhashtag
             };
-
-
-
         } catch (error) {
 
+        }
+    }
+
+
+    async getTweet(id){
+        try {
+            const response = await this.tweetRepositroy.findbyComment(id);
+            return response;
+        } catch (error) {
+            console.log(error);
         }
     }
 

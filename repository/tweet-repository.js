@@ -15,6 +15,16 @@ class TweetRepository extends CrudRepository{
         }
 
     }
+
+    async findbyComment(id) {
+        try {
+            const response =await this.model.findById(id).populate({ path: "comments" })
+            return response;
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
 }
 
 export default TweetRepository;

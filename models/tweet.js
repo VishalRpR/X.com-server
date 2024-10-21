@@ -13,9 +13,10 @@ const tweetSchema = mongoose.Schema({
     noOfRetweet:{
         type:Number
     },
-    comments:{
-        type:String
-    }
+    comments:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Comment"
+    }]
 },{timestamps:true});
 
 
