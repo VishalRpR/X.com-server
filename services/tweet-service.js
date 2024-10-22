@@ -10,13 +10,16 @@ class TweetService {
 
     async createTweet(data) {
         try {
+           
             const content = data.content;
-            const tags = content.match(/#[a-zA-Z0-9_\-]+/g).map((tg) => (tg.substring(1).toLowerCase()));
-            //    console.log(tag)
+         
+            const tags =(content.match(/#[a-zA-Z0-9_\-]+/g) || []).map((tg) => (tg.substring(1).toLowerCase()));
+               console.log(tags)
 
             //    puting data into tweet model
-
+            
             const tweet = await this.tweetRepositroy.create(data);
+           
             const prevhastag = await this.hashtagRepository.getByName(tags);
             const textofPresent = prevhastag.map((tag) => (tag.text));
             let newtags = tags.filter((tag) => !textofPresent.includes(tag));
@@ -39,12 +42,10 @@ class TweetService {
 
 
             });
-            return {
-                tweet,
-                newhashtag
-            };
+            return tweet;
         } catch (error) {
-
+            console.log(error);
+            throw error;
         }
     }
 

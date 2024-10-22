@@ -24,11 +24,12 @@ class UserService {
     async Signin(data) {
         try {
             const response = await this.userRepository.getByEmail(data.email)
+             console.log(response)
+            const check=response.comparepass(data.password);
+       
 
-            const check = bcrypt.compareSync(data.password, response.password)
-            console.log(check)
             if (check) {
-                const token = jwt.sign({ response }, JWT_SECRET, { expiresIn: 60 * 60 });
+                const token = jwt.sign({ id:response.id,email:response.email }, JWT_SECRET, { expiresIn: 60 * 60 });
                 return token;
             };
 

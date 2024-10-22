@@ -33,6 +33,7 @@ async function Signup(req, res) {
 
 async function Signin(req, res) {
     try {
+        console.log(req.body)
         const response = await userService.Signin({
             email: req.body.email,
             password: req.body.password

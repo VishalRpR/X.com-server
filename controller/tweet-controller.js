@@ -7,6 +7,7 @@ async function createTweet(req, res) {
 
     try {
         console.log("hi in controller")
+        console.log(req.body)
         const response = await tweetService.createTweet({
             content: req.body.content,
             likes: req.body.likes,
@@ -14,6 +15,7 @@ async function createTweet(req, res) {
             comments: req.body.comments
 
         });
+     
         const SuccessResponse = {
             data: response,
             status: "OK",

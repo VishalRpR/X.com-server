@@ -3,7 +3,7 @@ import LikeService from "../services/like-service.js";
 const likeService = new LikeService();
 async function toggleLike(req,res){
     try {
-        const response = await likeService.toggleLike(req.body.userId, req.query.modelId, req.query.modelType);
+        const response = await likeService.toggleLike(req.user.id, req.query.modelId, req.query.modelType);
         return res.status(StatusCodes.OK).json({
             message:"sucessfully toggled the like",
             data:response,
