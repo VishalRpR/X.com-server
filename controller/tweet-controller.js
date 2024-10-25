@@ -72,5 +72,37 @@ async function getTweet(req, res) {
 
     }
 }
+async function getTweetAll(req, res) {
 
-export { createTweet, getTweet }
+    try {
+        console.log("hi in controller")
+        const response = await tweetService.getTweetAll();
+        const SuccessResponse = {
+            data: response,
+            status: "OK",
+            err: {},
+            message: "Successfully fetched the Tweet"
+
+        }
+
+        return res
+            .status(StatusCodes.OK)
+            .json(SuccessResponse)
+
+    }
+    catch (error) {
+        console.log(error)
+        const ErrorResponse = {
+            data: response,
+            status: "OK",
+            err: {},
+            message: "Not able to fetch the tweet"
+        }
+        return res
+            .status(StatusCodes.BAD_REQUEST)
+            .json(ErrorResponse)
+
+    }
+}
+
+export { createTweet, getTweet, getTweetAll }

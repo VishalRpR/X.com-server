@@ -4,11 +4,12 @@ import UserService from "../services/user-service.js";
 const userService = new UserService();
 async function Signup(req, res) {
     try {
+        console.log("request reached")
         const response = await userService.Signup({
             email: req.body.email,
             password: req.body.password
         })
-
+        console.log(response)
         const SuccessResponse = {
             message: "sucessfully signed up user",
             data: response,

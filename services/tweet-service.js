@@ -58,6 +58,14 @@ class TweetService {
             console.log(error);
         }
     }
+    async getTweetAll() {
+        try {
+            const response = await this.tweetRepositroy.getAll();
+            return response;
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
 
 

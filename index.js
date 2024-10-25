@@ -8,9 +8,11 @@ import router from './routes/index.js';
 import bodyParser from 'body-parser';
 import LikeService from './services/like-service.js';
 import passport from 'passport';
+import cors from "cors"
 import passportAuth from './config/jwt-middleware.js';
-const app=express();
 
+const app=express();
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}))
