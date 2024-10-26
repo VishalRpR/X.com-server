@@ -20,6 +20,7 @@ async function Signup(req, res) {
 
         return res.status(StatusCodes.OK).json(SuccessResponse);
     } catch (error) {
+        console.log(error)
         const ErrorResponse = {
             message: "Error occured while signing up user",
             data: {},
@@ -63,4 +64,7 @@ async function Signin(req, res) {
     }
 }
 
-export { Signup, Signin }
+
+
+
+export { Signup, Signin}

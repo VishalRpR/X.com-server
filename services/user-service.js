@@ -2,6 +2,7 @@ import UserRepository from "../repository/user-repository.js";
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 import { JWT_SECRET } from "../config/server-config.js";
+import User from "../models/user.js";
 class UserService {
     constructor() {
         this.userRepository = new UserRepository();
@@ -10,6 +11,13 @@ class UserService {
 
     async Signup(data) {
         try {
+            const check=await this.userRepository.getByEmail(data.email)
+            if (check){
+                 throw new Error("User already exists").message
+                   
+            }
+            console.log("reached here or not")
+             
             const response = await this.userRepository.create(data);
             return response;
         } catch (error) {
@@ -40,6 +48,10 @@ class UserService {
             throw error;
         }
     }
+
+
+    
+    
 }
 
 

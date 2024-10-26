@@ -1,16 +1,20 @@
 import mongoose from "mongoose"
 import bcrypt from "bcryptjs"
+import uniqueValidator from 'mongoose-unique-validation';
 const userSchema = mongoose.Schema({
     email: {
         type: String,
         required: true,
+        unique: true,
         max: [250, "max limit is 250"]
     },
     password: {
         type: String,
-        requiered: true
+        required: true
     }
 }, { timestamps: true })
+
+userSchema.plugin(uniqueValidator);
 
 userSchema.pre('save', function (next) {
     // Modify the document or perform additional tasks
@@ -26,5 +30,6 @@ userSchema.methods.comparepass=function(password){
         return check;
 }
 const User = mongoose.model("User", userSchema);
+
 
 export default User;
