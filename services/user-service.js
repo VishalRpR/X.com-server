@@ -11,13 +11,13 @@ class UserService {
 
     async Signup(data) {
         try {
-            const check=await this.userRepository.getByEmail(data.email)
-            if (check){
-                 throw new Error("User already exists").message
-                   
+            const check = await this.userRepository.getByEmail(data.email)
+            if (check) {
+                throw new Error("User already exists").message
+
             }
             console.log("reached here or not")
-             
+
             const response = await this.userRepository.create(data);
             return response;
         } catch (error) {
@@ -32,12 +32,12 @@ class UserService {
     async Signin(data) {
         try {
             const response = await this.userRepository.getByEmail(data.email)
-             console.log(response)
-            const check=response.comparepass(data.password);
-       
+            console.log(response)
+            const check = response.comparepass(data.password);
+
 
             if (check) {
-                const token = jwt.sign({ id:response.id,email:response.email }, JWT_SECRET, { expiresIn: 60 * 60 });
+                const token = jwt.sign({ id: response.id, email: response.email }, JWT_SECRET, { expiresIn: 60 * 60 });
                 return token;
             };
 
@@ -50,8 +50,8 @@ class UserService {
     }
 
 
-    
-    
+
+
 }
 
 
