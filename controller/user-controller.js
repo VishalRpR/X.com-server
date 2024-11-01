@@ -66,5 +66,34 @@ async function Signin(req, res) {
 
 
 
+async function getUser(req,res){
+    try {
+        console.log("request reached")
+        console.log(req.user)
+        const response = await userService.getUser(req.user.email)
+        const data={
+             email:response.email,
+             id:response._id
+        }
+        const SuccessResponse = {
+            message: "sucessfully fetched the user",
+            data: data,
+            status: "OK",
+            err: {}
+        }
 
-export { Signup, Signin}
+
+        return res.status(StatusCodes.OK).json(SuccessResponse);
+
+
+        
+    } catch (error) {
+        console.log(error)
+        
+    }
+}
+
+
+
+
+export { Signup, Signin, getUser }

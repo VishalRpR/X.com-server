@@ -37,7 +37,7 @@ class UserService {
 
 
             if (check) {
-                const token = jwt.sign({ id: response.id, email: response.email }, JWT_SECRET, { expiresIn: 60 * 60 });
+                const token = jwt.sign({ id: response.id, email: response.email }, JWT_SECRET);
                 return token;
             };
 
@@ -47,6 +47,20 @@ class UserService {
             console.log(error);
             throw error;
         }
+    }
+
+    async  getUser(email){
+      try {
+          const user = await this.userRepository.getByEmail(email);
+          console.log(user)
+          return user
+          
+        
+      } catch (error) {
+
+        console.log(error)
+        
+      }
     }
 
 
