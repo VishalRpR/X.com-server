@@ -9,11 +9,11 @@ class HashtagRepository extends CrudRepository {
 
 
     async getByName(text) {
-        
+
         try {
             // console.log(text)
-          
-        
+
+
             const response = await Hashtag.find({
                 text: text
             })
@@ -25,6 +25,28 @@ class HashtagRepository extends CrudRepository {
 
         }
     }
+
+
+    async getByRegex(regextext) {
+
+        try {
+            // console.log(text)
+
+            
+            const response = await Hashtag.find({
+                text: {
+                    "$regex":regextext
+                }
+            })
+
+            return response;
+        } catch (error) {
+            console.log(error);
+            throw error;
+
+        }
+    }
+
 
 
 

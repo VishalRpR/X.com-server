@@ -38,4 +38,42 @@ async function getHashtagAll(req, res) {
 }
 
 
-export default getHashtagAll;
+async function getHashtagregex(req, res) {
+
+    try {
+       
+       
+        const response = await hashtagService.getHashtagregex(req.query.text);
+        const SuccessResponse = {
+            data: response,
+            status: "OK",
+            err: {},
+            message: "Successfully fetchingregex Hashtag"
+
+        }
+
+        return res
+            .status(StatusCodes.OK)
+            .json(SuccessResponse)
+
+    }
+    catch (error) {
+        console.log(error)
+        const ErrorResponse = {
+            data: response,
+            status: "BAD",
+            err: {},
+            message: "Not able to fetch the  regex Hashtags"
+        }
+        return res
+            .status(StatusCodes.BAD_REQUEST)
+            .json(ErrorResponse)
+
+    }
+}
+
+
+export {
+    getHashtagAll, getHashtagregex
+
+} 

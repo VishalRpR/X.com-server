@@ -52,7 +52,15 @@ class CrudRepository {
   }
 
 
-
+async getbyfilter(id){
+  try {
+    const response = await this.model.find({commentable:id});
+    return response;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
 
 }
 

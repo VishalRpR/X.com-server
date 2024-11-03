@@ -17,6 +17,19 @@ async  getHashtagAll(){
         
     }
 }
+
+
+    async getHashtagregex(text) {
+        try {
+            const response =await this.hashtagRepository.getByRegex(text);
+            return response;
+        } catch (error) {
+
+            console.log(error);
+            throw error;
+
+        }
+    }
 }
 
 export default HashtagSevice;

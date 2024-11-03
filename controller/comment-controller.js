@@ -28,4 +28,29 @@ async function createComment(req,res){
       }
 }
 
-export default createComment;
+
+
+async function getComments(req,res){
+  try {
+    const response = await commentService.getComments(
+    
+      req.query.modelId,
+    )
+
+    return res.status(StatusCodes.OK).json({
+      message: "comments fetched sucessfully",
+      data: response,
+      status: "OK",
+      err: {}
+
+    })
+  } catch (error) {
+    console.log(error)
+    throw error;
+    
+  }
+}
+
+export {
+  getComments,
+  createComment}
