@@ -13,7 +13,7 @@ class UserService {
         try {
             const check = await this.userRepository.getByEmail(data.email)
             if (check) {
-                throw new Error("User already exists").message
+                throw new Error("User already exists")
 
             }
             console.log("reached here or not")
@@ -22,7 +22,7 @@ class UserService {
             return response;
         } catch (error) {
 
-            console.log(error);
+           
             throw error;
 
         }

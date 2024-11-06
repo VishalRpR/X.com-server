@@ -1,17 +1,31 @@
 import { StatusCodes } from "http-status-codes";
 import UserService from "../services/user-service.js";
+import { z } from "zod"
+import { parse } from "dotenv";
 
 const userService = new UserService();
+
+const Signschema = z.object({
+    email: z.string().email(),
+    password: z.string().min(3)
+})
+
 async function Signup(req, res) {
     try {
+
+        const parsedata = Signschema.safeParse(req.body)
+
+        if (!parsedata.success) {
+            return res.status(StatusCodes.BAD_REQUEST).json({
+                message: "invalid creds"
+
+            })
+        }
         console.log("request reached")
-        const response = await userService.Signup({
-            email: req.body.email,
-            password: req.body.password
-        })
+        const response = await userService.Signup(parsedata.data)
         console.log(response)
         const SuccessResponse = {
-            message: "sucessfully signed up user",
+            message: "sucessfully SIGNED UP user",
             data: response,
             status: "OK",
             err: {}
@@ -20,9 +34,9 @@ async function Signup(req, res) {
 
         return res.status(StatusCodes.OK).json(SuccessResponse);
     } catch (error) {
-        console.log(error)
+        console.log(error.message)
         const ErrorResponse = {
-            message: "Error occured while signing up user",
+            message: error.message ? error.message :"Error occured while signing up user",
             data: {},
             status: "BAD",
             err: error
@@ -36,22 +50,29 @@ async function Signup(req, res) {
 async function Signin(req, res) {
     try {
         console.log(req.body)
-        const response = await userService.Signin({
-            email: req.body.email,
-            password: req.body.password
-        })
+
+        const parseddata = Signschema.safeParse(req.body)
+           console.log(parseddata)
+        if (!parseddata.success) {
+            return res.status(StatusCodes.BAD_REQUEST).json({
+                message: "Invalid creds"
+            })
+        }
+        const response = await userService.Signin(parseddata.data)
 
 
 
         const SuccessResponse = {
-            message: response ? "sucessfully signed in user" : "bad request either password wrong or emailnot found",
+            message: "sucessfully SIGNED IN user",
             data: response,
-            status: response ? "OK" : "BAD",
+            status: "OK",
             err: {}
         }
 
 
         return res.status(StatusCodes.OK).json(SuccessResponse);
+
+
     } catch (error) {
         const ErrorResponse = {
             message: "Error occured while signing in user",
@@ -66,14 +87,14 @@ async function Signin(req, res) {
 
 
 
-async function getUser(req,res){
+async function getUser(req, res) {
     try {
         console.log("request reached")
         console.log(req.user)
         const response = await userService.getUser(req.user.email)
-        const data={
-             email:response.email,
-             id:response._id
+        const data = {
+            email: response.email,
+            id: response._id
         }
         const SuccessResponse = {
             message: "sucessfully fetched the user",
@@ -86,10 +107,10 @@ async function getUser(req,res){
         return res.status(StatusCodes.OK).json(SuccessResponse);
 
 
-        
+
     } catch (error) {
         console.log(error)
-        
+
     }
 }
 

@@ -9,6 +9,7 @@ import {getHashtagAll, getHashtagregex } from "../controller/hashtag-controller.
 import User from "../models/user.js";
 
 
+
 const router = express.Router();
 console.log("in router")
 router.post('/tweet', authenticate,createTweet);
