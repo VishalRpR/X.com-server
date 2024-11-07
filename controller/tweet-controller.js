@@ -1,3 +1,4 @@
+import { tweetSchema } from "../config/zod.js";
 import TweetService from "../services/tweet-service.js";
 import { StatusCodes } from "http-status-codes"
 
@@ -8,13 +9,13 @@ async function createTweet(req, res) {
     try {
         console.log("hi in controller")
         console.log(req.body)
-        const response = await tweetService.createTweet({
-            content: req.body.content,
-            likes: req.body.likes,
-            noOfRetweet: req.body.noOfRetweet,
-            comments: req.body.comments
-
-        });
+        const parseddata=tweetSchema.safeParse(req.body);
+        if(!parseddata.success){
+            return res.status(400).json({
+                message:"invalid input"
+            })
+        }
+        const response = await tweetService.createTweet(parseddata.data)
      
         const SuccessResponse = {
             data: response,
