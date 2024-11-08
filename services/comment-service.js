@@ -57,5 +57,21 @@ class CommentService {
 
         }
     }
+    async getComment(id) {
+        try {
+
+
+            const comment = await this.commentRepository.get(id)
+            console.log(comment,"ffffffffffffffffffffff")
+            return comment
+
+
+        } catch {
+            console.log(error)
+            throw error
+
+
+        }
+    }
 }
 export default CommentService;

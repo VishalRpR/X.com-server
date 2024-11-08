@@ -8,6 +8,7 @@ async function createTweet(req, res) {
 
     try {
         console.log("hi in controller")
+        req.body.user=req.user._id
         console.log(req.body)
         const parseddata=tweetSchema.safeParse(req.body);
         if(!parseddata.success){

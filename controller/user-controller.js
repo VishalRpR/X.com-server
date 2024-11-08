@@ -21,9 +21,9 @@ async function Signup(req, res) {
 
             })
         }
-        console.log("request reached")
+       
         const response = await userService.Signup(parsedata.data)
-        console.log(response)
+       
         const SuccessResponse = {
             message: "sucessfully SIGNED UP user",
             data: response,
@@ -112,9 +112,38 @@ async function getUser(req, res) {
         console.log(error)
 
     }
+
+}
+
+
+async function getUserById(req, res) {
+    try {
+        console.log("request reached")
+        console.log(req.params,"where is the user")
+        const response = await userService.getUserById(req.params.user)
+        const data = {
+            email: response.email,
+            id: response._id
+        }
+        const SuccessResponse = {
+            message: "sucessfully fetched the user",
+            data: data,
+            status: "OK",
+            err: {}
+        }
+
+
+        return res.status(StatusCodes.OK).json(SuccessResponse);
+
+
+
+    } catch (error) {
+        console.log(error)
+
+    }
 }
 
 
 
 
-export { Signup, Signin, getUser }
+    export { Signup, Signin, getUser, getUserById }

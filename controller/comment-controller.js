@@ -52,6 +52,30 @@ async function getComments(req,res){
   }
 }
 
+
+async function getComment(req, res) {
+  try {
+    console.log('req')
+    const response = await commentService.getComment(
+
+      req.params.id,
+    )
+
+    return res.status(StatusCodes.OK).json({
+      message: "comments fetched sucessfully",
+      data: response,
+      status: "OK",
+      err: {}
+
+    })
+  } catch (error) {
+    console.log(error)
+    throw error;
+
+  }
+}
+
 export {
   getComments,
+  getComment,
   createComment}

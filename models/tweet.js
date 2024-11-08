@@ -1,6 +1,9 @@
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 
 const tweetSchema = mongoose.Schema({
+    user:{
+          type:mongoose.Schema.Types.ObjectId
+    },
     content:{
         type:String,
         required:true
