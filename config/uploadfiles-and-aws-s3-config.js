@@ -1,32 +1,46 @@
-import aws from "aws-sdk";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3"; // Import AWS SDK v3 modules
 import multer from "multer";
-import multerS3 from "multer-s3";
 
+// Set up AWS credentials and region for S3 client (v3)
+const s3Client = new S3Client({
+  region: process.env.S3_REGION,
+  credentials: {
+    accessKeyId: process.env.ACCESSKEY_ID,
+    secretAccessKey: process.env.ACCESSKEY_SECRET,
+  },
+});
 
-aws.config.update({
-    accessKeyId: 'your_access_key_id',
-    secretAccessKey: 'your_secret_access_key',
-    region: 'your_bucket_region',
-})
+// File upload function using AWS SDK v3
+export const uploadFile = async (file) => {
+  const params = {
+    Bucket: process.env.AWS_BUCKET_NAME, // S3 bucket name
+    Key: `uploads/${Date.now()}-${file.originalname}`, // Unique key for the file
+    Body: file.buffer, // File content
+    ContentType: file.mimetype, // File type
+  
+  };
 
-const s3=new aws.S3();
+  try {
+    // Create the PutObjectCommand
+    const command = new PutObjectCommand(params);
 
+    // Upload the file to S3
+    const data = await s3Client.send(command);
 
+    // Replace S3 URL with CloudFront URL
+    const s3BucketUrl = process.env.S3BUCKET_URL;
+    const cloudFrontUrl = process.env.CLOUDFRONT_URL; // Your CloudFront distribution URL
+    const fileUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.S3_REGION}.amazonaws.com/${params.Key}`;
 
-const upload = multer({
-    storage: multerS3({
-        s3: s3,
-        bucket: 'some-bucket',
-        acl: 'public-read',
-        metadata: function (req, file, cb) {
-            cb(null, { fieldName: file.fieldname });
-        },
-        key: function (req, file, cb) {
-            cb(null, Date.now().toString())
-        }
-    })})
+    // Replace the S3 URL with the CloudFront URL
+    const cloudFrontFileUrl = fileUrl.replace(s3BucketUrl, cloudFrontUrl);
 
+    return cloudFrontFileUrl; // Return the CloudFront URL for the uploaded file
+  } catch (err) {
+    console.error("Error uploading file:", err);
+    throw err;
+  }
+};
 
-
-
-export default upload;
+// Use multer with memory storage (for in-memory file processing)
+export const upload = multer({ storage: multer.memoryStorage() });

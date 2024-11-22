@@ -7,12 +7,13 @@ import authenticate from "../middlewares/authenticate.js";
 import HashtagRepository from "../repository/hashtag-repository.js";
 import {getHashtagAll, getHashtagregex } from "../controller/hashtag-controller.js";
 import User from "../models/user.js";
+import { upload } from "../config/uploadfiles-and-aws-s3-config.js";
 
 
 
 const router = express.Router();
 console.log("in router")
-router.post('/tweet', authenticate,createTweet);
+router.post('/tweet',authenticate,upload.single('file'),createTweet);
 router.get("/hashtag",getHashtagAll)
 router.get("/hashtag/bulk", getHashtagregex)
 router.post("/like",authenticate,toggleLike)
