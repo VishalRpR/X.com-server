@@ -5,9 +5,9 @@ import UserRepository from "./user-repository.js";
 import CommentRepository from "./comment-repository.js";
 
 export {
-    LikeRepository,
-    HashtagRepository,
-    TweetRepository,
-    UserRepository,
-    CommentRepository
-}
+  LikeRepository,
+  HashtagRepository,
+  TweetRepository,
+  UserRepository,
+  CommentRepository,
+};

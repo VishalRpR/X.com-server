@@ -3,31 +3,26 @@ class CrudRepository {
     this.model = model;
   }
 
-
   async create(data) {
     try {
       const response = await this.model.create(data);
-      
+
       return response;
     } catch (error) {
       console.log(error);
       throw error;
     }
-
   }
-
 
   async getAll() {
     try {
       const response = await this.model.find();
       return response;
-      
     } catch (error) {
       console.log(error);
       throw error;
     }
   }
-
 
   async get(id) {
     try {
@@ -39,7 +34,6 @@ class CrudRepository {
     }
   }
 
-
   async delete(id) {
     try {
       const response = await this.model.deleteOne(id);
@@ -50,18 +44,15 @@ class CrudRepository {
     }
   }
 
-
-async getbyfilter(id){
-  try {
-    const response = await this.model.find({commentable:id});
-    return response;
-  } catch (error) {
-    console.log(error);
-    throw error;
+  async getbyfilter(id) {
+    try {
+      const response = await this.model.find({ commentable: id });
+      return response;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
   }
 }
-
-}
-
 
 export default CrudRepository;

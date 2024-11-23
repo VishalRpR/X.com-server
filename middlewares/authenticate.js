@@ -6,7 +6,7 @@ async function authenticate(req, res, next) {
            if (err) {
                return next(err);  // If there is an error, pass it to the next middleware
            }
-            //  console.log(req)
+          
            if (!user) {
                return res.status(StatusCodes.UNAUTHORIZED).json({
                    message: "Unauthorized user"

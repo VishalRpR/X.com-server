@@ -10,12 +10,12 @@ async function createTweet(req, res) {
     console.log("hi in controller");
   
     req.body.user = req.user._id;
-    
-
+   
+    if(req.file){
     const fileUrl = await uploadFile(req.file);
     req.body.image = fileUrl;
     
-
+    }
 
    
     const parseddata = tweetSchema.safeParse(req.body);

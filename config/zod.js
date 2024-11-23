@@ -7,5 +7,5 @@ export const tweetSchema = z.object({
   likes: z.boolean().optional(),
   noOfRetweet: z.number().optional(),
   comments: z.string().optional(),
-  image:z.string().optional()
+  image: z.string().optional(),
 });

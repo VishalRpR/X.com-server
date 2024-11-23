@@ -34,7 +34,7 @@ async function Signup(req, res) {
 
         return res.status(StatusCodes.OK).json(SuccessResponse);
     } catch (error) {
-        console.log(error.message)
+        
         const ErrorResponse = {
             message: error.message ? error.message :"Error occured while signing up user",
             data: {},
@@ -49,10 +49,10 @@ async function Signup(req, res) {
 
 async function Signin(req, res) {
     try {
-        console.log(req.body)
+      
 
         const parseddata = Signschema.safeParse(req.body)
-           console.log(parseddata)
+         
         if (!parseddata.success) {
             return res.status(StatusCodes.BAD_REQUEST).json({
                 message: "Invalid creds"
@@ -90,7 +90,7 @@ async function Signin(req, res) {
 async function getUser(req, res) {
     try {
         console.log("request reached")
-        console.log(req.user)
+       
         const response = await userService.getUser(req.user.email)
         const data = {
             email: response.email,
@@ -119,7 +119,7 @@ async function getUser(req, res) {
 async function getUserById(req, res) {
     try {
         console.log("request reached")
-        console.log(req.params,"where is the user")
+       
         const response = await userService.getUserById(req.params.user)
         const data = {
             email: response.email,
